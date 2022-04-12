@@ -1,57 +1,47 @@
-import numpy as np
-from sklearn import datasets
-from sklearn.model_selection import train_test_split
-import matplotlib.pyplot as plt
-from matplotlib.colors import ListedColormap
-cmap = ListedColormap(['#FF0000','#00FF00', '#0000FF'])
-from collections import Counter
+import math
 import pandas as pd
-
-
-
-def euclidean_distance(x1, x2):
-    return np.sqrt(np.sum((x1-x2)**2))
-
-
-class KNN:
-
-    def __init__(self, k=3):
-        self.k = k
-
-    def fit(self, X, y):
-        self.X_train = X
-        self.y_train = y
-
-    def predict(self, X):
-        predicted_labels = [self._predict(x) for x in X]
-        return np.array(predicted_labels)
-
-    def _predict(self, x):
-        # Compute the distances
-        distances = [euclidean_distance(x, x_train) for x_train in self.X_train]
-        # Get K-nearest samples and labels
-        k_indices = np.argsort(distances)[:self.k]
-        k_nearest_labels = [self.y_train[i] for i in k_indices]
-        # Majority vote, based on the most common class label
-        most_common = Counter(k_nearest_labels).most_common(1)
+from KNN import KNN
 
 
 def main():
-    female_tshirt = pd.read_csv('female_tshirt.csv')
-    X, y = female_tshirt['Height'], female_tshirt['Weight']
+    # Weight input
+    weight = input("Please, enter your weight(kg): ")
+    # Height input
+    height = input("Enter your height (cm): ")
+    # Gender input
+    gender = input("Are you male or female? ")
+    print("Thank you for your input.")
+    print("Please, wait while we process your request...")
 
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=1234)
+    test_input = [float(height), float(weight)]
 
-    print(X_train.shape)
-    print(X_train[0])
+    # Load Tshirt Dataframe
+    df_tshirt = pd.read_csv(f'{gender}_tshirt.csv')
+    X_tshirt =list(zip(df_tshirt.Height.tolist(), df_tshirt.Weight.tolist()))
+    y_tshirt = list(df_tshirt.Size.tolist())
 
-    print(y_train.shape)
-    print(y_train)
+    # Load Pants Dataframe
+    df_pants = pd.read_csv(f'{gender}_pants.csv')
+    X_pants = list(zip(df_pants.Height.tolist(), df_pants.Weight.tolist()))
+    y_pants = list(df_pants.Size.tolist())
 
-    plt.figure()
-    plt.scatter(X, y, c=y, cmap=cmap, edgecolor='k', s=20)
-    plt.show()
+    # Start KNN & define K
+    K = round(math.sqrt(len(y_tshirt)))
+    clf = KNN(k=K)
 
+    # Run KNN for T-shir
+    clf.fit(X_tshirt, y_tshirt)
+    predicted_tshirt = clf.predict(test_input)
+
+    # Run KNN for Pants
+    clf.fit(X_pants, y_pants)
+    predicted_pants = clf.predict(test_input)
+
+
+    # Print results
+    print("Based on a K-Nearest Neighbour analysis I predict that you will need:")
+    print(f"A tshirt size {predicted_tshirt[0][0]} with a {predicted_tshirt[0][1]}% accuracy.")
+    print(f"And pants size {predicted_pants[0][0]} with a {predicted_pants[0][1]}% accuracy.")
 
 
 if __name__ == '__main__':
