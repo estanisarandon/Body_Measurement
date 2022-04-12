@@ -1,6 +1,7 @@
 import math
 import pandas as pd
 from KNN import KNN
+from sklearn.neighbors import KNeighborsClassifier
 
 
 def main():
@@ -37,11 +38,35 @@ def main():
     clf.fit(X_pants, y_pants)
     predicted_pants = clf.predict(test_input)
 
-
     # Print results
+    print("")
+    print("-------------------------------------------")
     print("Based on a K-Nearest Neighbour analysis I predict that you will need:")
     print(f"A tshirt size {predicted_tshirt[0][0]} with a {predicted_tshirt[0][1]}% accuracy.")
     print(f"And pants size {predicted_pants[0][0]} with a {predicted_pants[0][1]}% accuracy.")
+    print("")
+    input("Pres Enter to validate these data with Sklearn KNN")
+
+    # Start Sklearn KNN and define K
+    clf = KNeighborsClassifier(n_neighbors=K, weights='uniform')
+
+    # Sklearn KNN T-shirt
+    clf.fit(X_tshirt, y_tshirt)
+    skl_input = [[float(height), float(weight)]]
+    Sklearn_size_tshirt = clf.predict(skl_input)
+
+    # Sklearn KNN Pants
+    clf.fit(X_pants, y_pants)
+    skl_input = [[float(height), float(weight)]]
+    Sklearn_size_pants = clf.predict(skl_input)
+
+    print("")
+    print("-------------------------------------------")
+    print("Based on the Sklearn KNN your sizes are:")
+    print(f"For tshirt, a size {Sklearn_size_tshirt[0]}.")
+    print(f"And for pants, a size {Sklearn_size_pants[0]}.")
+
+
 
 
 if __name__ == '__main__':
