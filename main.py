@@ -76,7 +76,7 @@ def main():
     SVM_input = [[height, weight]]
     SVM_predicted_tshirt = svclassifier.predict(SVM_input)
 
-    # SVM T-shirt
+    # SVM Pants
     svclassifier.fit(X_pants, y_pants)
     SVM_input = [[height, weight]]
     SVM_predicted_pants = svclassifier.predict(SVM_input)
