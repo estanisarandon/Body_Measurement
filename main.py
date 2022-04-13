@@ -2,6 +2,7 @@ import math
 import pandas as pd
 from KNN import KNN
 from sklearn.neighbors import KNeighborsClassifier
+from sklearn.svm import SVC
 
 
 def main():
@@ -63,12 +64,29 @@ def main():
     print("")
     print("-------------------------------------------")
     print("Based on the Sklearn KNN your sizes are:")
-    print(f"For tshirt, a size {Sklearn_size_tshirt[0]}.")
-    print(f"And for pants, a size {Sklearn_size_pants[0]}.")
+    print(f"For tshirt, computer says {Sklearn_size_tshirt[0]}.")
+    print(f"And for pants, computer says {Sklearn_size_pants[0]}.")
 
+    print("")
+    input("Pres Enter to validate these data with Sklearn SVM")
 
+    # SVM T-shirt
+    svclassifier = SVC(kernel="linear")
+    svclassifier.fit(X_tshirt, y_tshirt)
+    SVM_input = [[height, weight]]
+    SVM_predicted_tshirt = svclassifier.predict(SVM_input)
+
+    # SVM T-shirt
+    svclassifier.fit(X_pants, y_pants)
+    SVM_input = [[height, weight]]
+    SVM_predicted_pants = svclassifier.predict(SVM_input)
+
+    print("")
+    print("-------------------------------------------")
+    print("Based on the Sklearn SVM your sizes are:")
+    print(f"For tshirt, computer says {SVM_predicted_tshirt[0]}.")
+    print(f"And for pants, computer says {SVM_predicted_pants[0]}.")
 
 
 if __name__ == '__main__':
     main()
-
