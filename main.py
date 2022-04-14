@@ -53,14 +53,13 @@ def main():
 
     # Sklearn KNN T-shirt
     clf.fit(X_tshirt, y_tshirt)
-    skl_input = test_input
-    Sklearn_size_tshirt = clf.predict(skl_input)
+    Sklearn_size_tshirt = clf.predict(test_input)
 
     # Sklearn KNN Pants
     clf.fit(X_pants, y_pants)
-    skl_input = test_input
-    Sklearn_size_pants = clf.predict(skl_input)
+    Sklearn_size_pants = clf.predict(test_input)
 
+    # Print results
     print("")
     print("-------------------------------------------")
     print("Based on the Sklearn KNN your sizes are:")
@@ -73,14 +72,13 @@ def main():
     # Sklearn SVM T-shirt
     svclassifier = SVC(kernel="linear")
     svclassifier.fit(X_tshirt, y_tshirt)
-    SVM_input = test_input
-    SVM_predicted_tshirt = svclassifier.predict(SVM_input)
+    SVM_predicted_tshirt = svclassifier.predict(test_input)
 
     # Sklearn SVM Pants
     svclassifier.fit(X_pants, y_pants)
-    SVM_input = test_input
-    SVM_predicted_pants = svclassifier.predict(SVM_input)
+    SVM_predicted_pants = svclassifier.predict(test_input)
 
+    # Print results
     print("")
     print("-------------------------------------------")
     print("Based on the Sklearn SVM your sizes are:")
