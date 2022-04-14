@@ -1,12 +1,10 @@
 import math
-
 import numpy as np
 from collections import Counter
-
 from sklearn.metrics import accuracy_score
 
 
-def euclidean_distance(x1, x2):
+def pythagoras_sats(x1, x2):
     x1, y1 = x1
     x2, y2 = x2
     delta_X = x1-x2
@@ -30,7 +28,7 @@ class KNN:
         # Compute the distances
         distances = []
         for i, ds_data in enumerate(self.X_dataset):
-            dist = euclidean_distance(ds_data, x_test)
+            dist = pythagoras_sats(ds_data, x_test)
             distances.append({'dist': dist, 'size': self.y_dataset[i]})
         # Get K-nearest samples and labels
         distances.sort(key=lambda data: data['dist'])
@@ -40,4 +38,5 @@ class KNN:
         # Calculate accuracy
         acc = round((most_common / self.k) *100)
         size = counter.most_common(1)[0][0]
+
         return [size, acc]

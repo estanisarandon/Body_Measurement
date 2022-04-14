@@ -15,7 +15,7 @@ def main():
     print("Thank you for your input.")
     print("Please, wait while we process your request...")
 
-    test_input = [float(height), float(weight)]
+    test_input = [[float(height), float(weight)]]
 
     # Load Tshirt Dataframe
     df_tshirt = pd.read_csv(f'{gender}_tshirt.csv')
@@ -53,12 +53,12 @@ def main():
 
     # Sklearn KNN T-shirt
     clf.fit(X_tshirt, y_tshirt)
-    skl_input = [[float(height), float(weight)]]
+    skl_input = test_input
     Sklearn_size_tshirt = clf.predict(skl_input)
 
     # Sklearn KNN Pants
     clf.fit(X_pants, y_pants)
-    skl_input = [[float(height), float(weight)]]
+    skl_input = test_input
     Sklearn_size_pants = clf.predict(skl_input)
 
     print("")
@@ -70,15 +70,15 @@ def main():
     print("")
     input("Pres Enter to validate these data with Sklearn SVM")
 
-    # SVM T-shirt
+    # Sklearn SVM T-shirt
     svclassifier = SVC(kernel="linear")
     svclassifier.fit(X_tshirt, y_tshirt)
-    SVM_input = [[height, weight]]
+    SVM_input = test_input
     SVM_predicted_tshirt = svclassifier.predict(SVM_input)
 
-    # SVM Pants
+    # Sklearn SVM Pants
     svclassifier.fit(X_pants, y_pants)
-    SVM_input = [[height, weight]]
+    SVM_input = test_input
     SVM_predicted_pants = svclassifier.predict(SVM_input)
 
     print("")
